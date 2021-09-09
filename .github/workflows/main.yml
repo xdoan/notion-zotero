@@ -6,7 +6,7 @@ on:
       - main
 
   schedule:
-    - cron: "0 0,8 * * 3,4,6"
+    - cron: "0 0,4,8 * * 3,4,6"
 
   
 
