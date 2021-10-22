@@ -61,21 +61,22 @@ def add_notion_row(cv: NotionClient, title: str, authors: str,
                    year: list, url: str, key: str, version: int) -> None:
     if not isinstance(title, str):
         return
-    if len(cv.collection.get_rows(search=key)) > 0:
-        try:
-            row = cv.collection.get_rows(search=key)[0]
-            if int(row.version) >= version:
-                pass
-            else:
-                set_row_props(row, title, authors, year, url, key, version)
-                
-        except:
-            CONSOLE.print(
-                'Errors occurred when getting specific row, adding inseead...',
-                style="bold red")
+    try:
+        if len(cv.collection.get_rows(search=key)) > 0:
+                row = cv.collection.get_rows(search=key)[0]
+                if int(row.version) >= version:
+                    pass
+                else:
+                    set_row_props(row, title, authors, year, url, key, version)
+        
+        else:
             row = cv.collection.add_row()
             set_row_props(row, title, authors, year, url, key, version)
-    else:
+                
+    except:
+        CONSOLE.print(
+            'Errors occurred when getting specific row, adding instead...',
+            style="bold red")
         row = cv.collection.add_row()
         set_row_props(row, title, authors, year, url, key, version)
 
